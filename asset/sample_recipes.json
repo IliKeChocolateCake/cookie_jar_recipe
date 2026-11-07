@@ -1,0 +1,30 @@
+{
+  "recipes": [
+    {
+      "id": "r1",
+      "title": "Nasi Lemak",
+      "typeId": 1,
+      "imagePath": null,
+      "ingredients": [
+        "2 cups jasmine rice",
+        "1 cup coconut milk",
+        "2 pandan leaves",
+        "Sambal, cucumber, anchovies, egg"
+      ],
+      "steps": [
+        "Rinse the rice and cook with coconut milk and pandan leaves.",
+        "Fry the anchovies until crispy.",
+        "Boil the eggs and slice the cucumber.",
+        "Plate with sambal and serve."
+      ]
+    },
+    {
+      "id": "r2",
+      "title": "Chocolate Brownies",
+      "typeId": 4,
+      "imagePath": null,
+      "ingredients": ["200g dark chocolate", "150g butter", "3 eggs", "1 cup sugar", "3/4 cup flour"],
+      "steps": ["Melt chocolate and butter.", "Whisk in eggs and sugar.", "Fold in the flour.", "Bake at 175°C for 25 minutes."]
+    }
+  ]
+}
