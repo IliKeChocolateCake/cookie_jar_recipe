@@ -1,6 +1,15 @@
-import 'package:flutter/material.dart';
 
-void main() {
+import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:cookie_jar_recipe/data/model/recipe_model.dart';
+import 'package:cookie_jar_recipe/data/model/recipe_model_adapter.dart';
+
+void main() async {
+    WidgetsFlutterBinding.ensureInitialized();   // required before async work
+
+  await Hive.initFlutter();                    // 1. start Hive
+  Hive.registerAdapter(RecipeModelAdapter());  // 2. register the adapter
+  await Hive.openBox<RecipeModel>('recipes'); 
   runApp(const MyApp());
 }
 
@@ -10,11 +19,12 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    
     return MaterialApp(
       title: 'CookieJarRecipes',
       theme: ThemeData(
 
-        colorScheme: .fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.brown),
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
@@ -88,7 +98,7 @@ class _MyHomePageState extends State<MyHomePage> {
           // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
           // action in the IDE, or press "p" in the console), to see the
           // wireframe for each widget.
-          mainAxisAlignment: .center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text('You have pushed the button this many times:'),
             Text(

@@ -4,7 +4,7 @@ class RecipeModel {
   final String id;
   final String title;
   final int typeId;
-  final String imagePath;
+  final String? imagePath;
   final List<String> ingredients;
   final List<String> steps;
 
