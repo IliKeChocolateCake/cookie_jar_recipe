@@ -41,7 +41,7 @@ class RecipeDetailPage extends StatelessWidget {
     // deleted or missing: show nothing instead of crashing
     if (recipe == null) return const Scaffold(body: SizedBox.shrink());
 
-    final theme = Theme.of(context);
+
 
     return Scaffold(
       appBar: AppBar(

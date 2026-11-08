@@ -18,7 +18,7 @@ class RecipeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+
 
     return Card(
       clipBehavior: Clip.antiAlias, // rounds the image corners with the card

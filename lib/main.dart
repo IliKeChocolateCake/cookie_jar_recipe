@@ -9,7 +9,8 @@ import 'package:cookie_jar_recipe/data/repository/recipe_api.dart';
 import 'package:cookie_jar_recipe/view_model/recipe_list_view_model.dart';
 import 'package:provider/provider.dart';
 import 'package:cookie_jar_recipe/data/repository/recipe_type_api.dart';
-
+import 'package:cookie_jar_recipe/ui/pages/login_page.dart';
+import 'package:cookie_jar_recipe/view_model/auth_view_model.dart';
 
 
 void main() async {
@@ -36,9 +37,23 @@ if (settings.get('seeded', defaultValue: false) == false) {
         )..load(),
       ),
     ],
-    child: const MyApp(),
+    child: const AuthGate(),
   ),
 );
+}
+class AuthGate extends StatelessWidget {
+  const AuthGate({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final auth = context.watch<AuthViewModel>();
+    if (auth.isChecking) {
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
+    }
+    return auth.isLoggedIn
+        ? const MyApp()
+        : const LoginPage();
+  }
 }
 
 class MyApp extends StatelessWidget {
