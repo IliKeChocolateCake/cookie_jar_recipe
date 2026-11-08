@@ -2,6 +2,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:cookie_jar_recipe/data/repository/auth.dart';
 
+
 class AuthViewModel extends ChangeNotifier {
   final AuthRepository _repo;
   AuthViewModel(this._repo);

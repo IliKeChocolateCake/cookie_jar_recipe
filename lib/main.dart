@@ -11,7 +11,7 @@ import 'package:provider/provider.dart';
 import 'package:cookie_jar_recipe/data/repository/recipe_type_api.dart';
 import 'package:cookie_jar_recipe/ui/pages/login_page.dart';
 import 'package:cookie_jar_recipe/view_model/auth_view_model.dart';
-
+import 'package:cookie_jar_recipe/data/repository/auth.dart';
 
 void main() async {
     WidgetsFlutterBinding.ensureInitialized();   // required before async work
@@ -36,11 +36,31 @@ if (settings.get('seeded', defaultValue: false) == false) {
           RecipeTypeApi(),
         )..load(),
       ),
+      ChangeNotifierProvider(
+    create: (_) => AuthViewModel(AuthRepository())..init(),
+  ),
     ],
-    child: const AuthGate(),
+    child: const MyApp(),
   ),
 );
 }
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'CookieJarRecipes',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.brown),
+      ),
+      home: const AuthGate(),   // the gate lives inside MaterialApp
+    );
+  }
+}
+
 class AuthGate extends StatelessWidget {
   const AuthGate({super.key});
 
@@ -51,27 +71,8 @@ class AuthGate extends StatelessWidget {
       return const Scaffold(body: Center(child: CircularProgressIndicator()));
     }
     return auth.isLoggedIn
-        ? const MyApp()
+        ? const MyHomePage(title: 'Cookie Jar Recipes')
         : const LoginPage();
-  }
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'CookieJarRecipes',
-      theme: ThemeData(
-
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.brown),
-      ),
-      home: const MyHomePage(title: 'Cookie Jar Recipes'),
-    );
   }
 }
 

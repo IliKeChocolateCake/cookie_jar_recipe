@@ -7,6 +7,7 @@ import 'package:cookie_jar_recipe/ui/pages/recipe_form_page.dart';
 import 'package:cookie_jar_recipe/ui/pages/recipe_detail_page.dart';
 import 'package:cookie_jar_recipe/constant/text_style.dart';
 import 'package:cookie_jar_recipe/ui/widget/confirm_delete.dart';
+import 'package:cookie_jar_recipe/view_model/auth_view_model.dart';
 
 class MyHomePage extends StatelessWidget {
   final String title;
@@ -27,6 +28,14 @@ class MyHomePage extends StatelessWidget {
             icon: const Icon(Icons.refresh),
             onPressed: vm.load,
 
+          ),
+
+          IconButton(
+            icon: const Icon(Icons.logout),
+            onPressed: () {
+              // Call the logout method from AuthViewModel
+              context.read<AuthViewModel>().logout();
+            },
           ),
         ],
       ),

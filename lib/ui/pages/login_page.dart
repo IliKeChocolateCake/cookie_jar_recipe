@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:cookie_jar_recipe/view_model/auth_view_model.dart';
-
+import 'package:cookie_jar_recipe/constant/text_style.dart';
 
 
 class LoginPage extends StatefulWidget {
@@ -28,18 +28,22 @@ void dispose() {
     final auth = context.watch<AuthViewModel>();
     
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Login'),
-      ),
+     
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
          Image.asset(
-  'asset/cookie_logo.jpeg',
+  'asset/cookie_logo.png',
   height: 100,
   errorBuilder: (_, __, ___) => const Icon(Icons.cookie, size: 80),
+),
+
+const SizedBox(height: 8),
+Text(
+  'Cookie Jar Recipes',
+  style: AppTextStyles.appBarTitle.copyWith(fontSize: 24),
 ),
 const SizedBox(height: 24),
             TextField(
@@ -50,6 +54,8 @@ const SizedBox(height: 24),
               ),
               textInputAction: TextInputAction.next
             ),
+            const SizedBox(height: 12),
+
             TextField(
               controller: _passwordController,
               decoration: const InputDecoration(labelText: 'Password',

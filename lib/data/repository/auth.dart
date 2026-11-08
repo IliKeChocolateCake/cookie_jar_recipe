@@ -11,7 +11,7 @@ class AuthRepository {
   String _hash(String input) => sha256.convert(utf8.encode(input)).toString();
 
   Future<bool> login(String username, String password) async {
-    final raw = await rootBundle.loadString('asset/users.json'); // match your path
+    final raw = await rootBundle.loadString('asset/user.json'); // match your path
     final users = (jsonDecode(raw)['users'] as List);
     final match = users.any((u) =>
         u['username'] == username.trim() && u['passwordHash'] == _hash(password));
