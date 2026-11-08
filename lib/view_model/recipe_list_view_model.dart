@@ -1,0 +1,56 @@
+import 'package:flutter/foundation.dart';
+import 'package:cookie_jar_recipe/data/model/recipe_model.dart';
+import 'package:cookie_jar_recipe/data/model/recipe_type_model.dart';
+import 'package:cookie_jar_recipe/data/repository/recipe_repo.dart';
+import 'package:cookie_jar_recipe/data/repository/recipe_type_api.dart';
+
+class RecipeListViewModel extends ChangeNotifier {
+  final RecipeRepository _recipeRepository;
+  final RecipeTypeApi _recipeTypeApi;
+
+  RecipeListViewModel(this._recipeRepository, this._recipeTypeApi);
+
+  List<RecipeType> types = [];
+  List<RecipeModel> recipes = [];
+  int? selectedTypeId; // null = "All"
+  bool isLoading = true;
+
+  bool get isJarEmpty => _recipeRepository.getAll().isEmpty;
+
+  Future<void> load() async {
+    types = await _recipeTypeApi.load();
+    _refresh();
+    isLoading = false;
+    notifyListeners();
+  }
+
+  void setFilter(int? typeId) {
+    selectedTypeId = typeId;
+    _refresh();
+    notifyListeners();
+  }
+
+  Future<void> delete(String id) async {
+    await _recipeRepository.delete(id);
+    _refresh();
+    notifyListeners();
+  }
+
+  void reload() {
+    _refresh();
+    notifyListeners();
+  }
+
+  void _refresh() {
+    recipes = selectedTypeId == null
+        ? _recipeRepository.getAll()
+        : _recipeRepository.filterByType(selectedTypeId!);
+  }
+
+  String typeName(int typeId) {
+    for (final t in types) {
+      if (t.id == typeId) return t.name;
+    }
+    return 'Unknown';
+  }
+}
