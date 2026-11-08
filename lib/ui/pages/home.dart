@@ -34,13 +34,16 @@ class MyHomePage extends StatelessWidget {
           ? const Center(child: CircularProgressIndicator())
           : Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(right:16),
-                  child: Text(
-                    '${vm.lastSynced ?? 'never'}',
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
-                ),
+                Align(
+  alignment: Alignment.centerRight,
+  child: Padding(
+    padding: const EdgeInsets.only(right: 16),
+    child: Text(
+      vm.lastSyncedLabel,
+      style: Theme.of(context).textTheme.bodySmall,
+    ),
+  ),
+),
                 _FilterChips(vm: vm),
                 Expanded(child: _RecipeList(vm: vm)),
               ],
