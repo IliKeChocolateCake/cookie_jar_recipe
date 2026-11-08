@@ -4,6 +4,7 @@ import 'package:cookie_jar_recipe/view_model/recipe_list_view_model.dart';
 import 'package:cookie_jar_recipe/ui/widget/empty_state.dart';
 import 'package:cookie_jar_recipe/ui/widget/recipe_card.dart';
 import 'package:cookie_jar_recipe/ui/pages/recipe_form_page.dart';
+import 'package:cookie_jar_recipe/ui/pages/recipe_detail_page.dart';
 
 class MyHomePage extends StatelessWidget {
   final String title;
@@ -113,7 +114,10 @@ class _RecipeList extends StatelessWidget {
           recipe: recipe,
           typeName: vm.typeName(recipe.typeId),
           onTap: () {
-            // TODO: open the detail page
+            Navigator.push(
+  context,
+  MaterialPageRoute(builder: (_) => RecipeDetailPage(recipeId: recipe.id)),
+);
           },
         );
       },

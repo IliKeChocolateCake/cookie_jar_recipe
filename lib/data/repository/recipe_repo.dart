@@ -4,9 +4,16 @@ import 'package:cookie_jar_recipe/data/model/recipe_model.dart';
 class RecipeRepository {
   final Box<RecipeModel> _box;
   RecipeRepository(this._box);
+  RecipeModel? getById(String id) => _box.get(id);
+
+
 
 //all recipes in the box
+
+
   List<RecipeModel> getAll() => _box.values.toList();
+
+  
 
 //filter recipes by typeId
 

@@ -16,6 +16,8 @@ class RecipeListViewModel extends ChangeNotifier {
   bool isLoading = true;
 
   bool get isJarEmpty => _recipeRepository.getAll().isEmpty;
+  RecipeModel? recipeById(String id) => _recipeRepository.getById(id);
+  
 
  DateTime? lastSynced;
 
