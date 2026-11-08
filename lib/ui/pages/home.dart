@@ -5,6 +5,7 @@ import 'package:cookie_jar_recipe/ui/widget/empty_state.dart';
 import 'package:cookie_jar_recipe/ui/widget/recipe_card.dart';
 import 'package:cookie_jar_recipe/ui/pages/recipe_form_page.dart';
 import 'package:cookie_jar_recipe/ui/pages/recipe_detail_page.dart';
+import 'package:cookie_jar_recipe/constant/text_style.dart';
 
 class MyHomePage extends StatelessWidget {
   final String title;
@@ -17,7 +18,7 @@ class MyHomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(title),
+        title: Text(title, style:AppTextStyles.appBarTitle),
         actions: [
           IconButton(
 
@@ -33,7 +34,7 @@ class MyHomePage extends StatelessWidget {
           : Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.all(16),
+                  padding: const EdgeInsets.only(right:16),
                   child: Text(
                     '${vm.lastSynced ?? 'never'}',
                     style: Theme.of(context).textTheme.bodySmall,
@@ -69,7 +70,7 @@ class _FilterChips extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         itemCount: vm.types.length + 1, // +1 for "All"
-        separatorBuilder: (_, __) => const SizedBox(width: 8),
+        separatorBuilder: (_, _) => const SizedBox(width: 8),
         itemBuilder: (context, index) {
           if (index == 0) {
             return ChoiceChip(
@@ -103,7 +104,10 @@ class _RecipeList extends StatelessWidget {
               message: 'Your cookie jar is empty.\nAdd your first recipe!',
               actionLabel: 'Add recipe',
               onAction: () {
-                // TODO: open the recipe form page
+        Navigator.push(
+  context,
+  MaterialPageRoute(builder: (_) => const RecipeFormPage()),
+);
               },
             )
           : const EmptyState(

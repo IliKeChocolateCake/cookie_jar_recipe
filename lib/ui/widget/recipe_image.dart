@@ -16,8 +16,8 @@ class RecipeImage extends StatelessWidget {
       return CachedNetworkImage(
         imageUrl: p,
         fit: BoxFit.cover,
-        placeholder: (_, __) => const Center(child: CircularProgressIndicator()),
-        errorWidget: (_, __, ___) => const _Placeholder(),
+        placeholder: (_, _) => const Center(child: CircularProgressIndicator()),
+        errorWidget: (_, _, _) => const _Placeholder(),
       );
     }
 
@@ -25,7 +25,7 @@ class RecipeImage extends StatelessWidget {
       return Image.asset(
         p,
         fit: BoxFit.cover,
-        errorBuilder: (_, __, ___) => const _Placeholder(),
+        errorBuilder: (_, _, _) => const _Placeholder(),
       );
     }
 
@@ -34,7 +34,7 @@ class RecipeImage extends StatelessWidget {
     return Image.file(
       File(p),
       fit: BoxFit.cover,
-      errorBuilder: (_, __, ___) => const _Placeholder(),
+      errorBuilder: (_, _, _) => const _Placeholder(),
     );
   }
 }

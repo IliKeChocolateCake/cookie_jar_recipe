@@ -1,6 +1,7 @@
 import 'package:cookie_jar_recipe/ui/widget/recipe_image.dart';
 import 'package:flutter/material.dart';
 import 'package:cookie_jar_recipe/data/model/recipe_model.dart';
+import 'package:cookie_jar_recipe/constant/text_style.dart';
 
 
 class RecipeCard extends StatelessWidget {
@@ -41,7 +42,7 @@ class RecipeCard extends StatelessWidget {
                       recipe.title,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: theme.textTheme.titleMedium,
+                      style: AppTextStyles.cardTitle,
                     ),
                     const SizedBox(height: 8),
                     Chip(

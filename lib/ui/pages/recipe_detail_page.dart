@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:cookie_jar_recipe/ui/pages/recipe_form_page.dart';
 import 'package:cookie_jar_recipe/view_model/recipe_list_view_model.dart';
 import 'package:cookie_jar_recipe/ui/widget/recipe_image.dart';
+import 'package:cookie_jar_recipe/constant/text_style.dart';
 
 class RecipeDetailPage extends StatelessWidget {
   final String recipeId;
@@ -79,7 +80,7 @@ class RecipeDetailPage extends StatelessWidget {
               const SizedBox(height: 16),
               Chip(label: Text(vm.typeName(recipe.typeId))),
               const SizedBox(height: 16),
-              Text('Ingredients', style: theme.textTheme.titleLarge),
+              Text('Ingredients', style: AppTextStyles.sectionHeading),
               const SizedBox(height: 8),
               for (final i in recipe.ingredients)
                 Padding(
@@ -87,7 +88,7 @@ class RecipeDetailPage extends StatelessWidget {
                   child: Text('• $i'),
                 ),
               const SizedBox(height: 24),
-              Text('Steps', style: theme.textTheme.titleLarge),
+              Text('Steps', style: AppTextStyles.sectionHeading),
               const SizedBox(height: 8),
               for (int n = 0; n < recipe.steps.length; n++)
                 Padding(
