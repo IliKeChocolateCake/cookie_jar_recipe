@@ -3,6 +3,10 @@ import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 import 'package:cookie_jar_recipe/data/model/recipe_model.dart';
 import 'package:cookie_jar_recipe/view_model/recipe_list_view_model.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:cookie_jar_recipe/ui/widget/recipe_image.dart';
+import 'package:cookie_jar_recipe/data/service/image_service.dart';
+
 
 class RecipeFormPage extends StatefulWidget {
   final RecipeModel? recipe; // null = create, set = edit
@@ -14,6 +18,8 @@ class RecipeFormPage extends StatefulWidget {
 
 class _RecipeFormPageState extends State<RecipeFormPage> {
   final _formKey = GlobalKey<FormState>();
+  final _imageService = ImageService();
+
   late final TextEditingController _titleCtrl;
   late final TextEditingController _ingredientsCtrl;
   late final TextEditingController _stepsCtrl;
@@ -76,6 +82,24 @@ class _RecipeFormPageState extends State<RecipeFormPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                GestureDetector(
+  onTap: _showImageOptions,
+  child: AspectRatio(
+    aspectRatio: 16 / 9,
+    child: ClipRRect(
+      borderRadius: BorderRadius.circular(12),
+      child: RecipeImage(path: _imagePath),
+    ),
+  ),
+),
+TextButton.icon(
+  onPressed: _showImageOptions,
+  icon: const Icon(Icons.add_a_photo),
+  label: Text(_imagePath == null ? 'Add photo' : 'Change photo'),
+),
+const SizedBox(height: 8),
+
+
                 TextFormField(
                   controller: _titleCtrl,
                   decoration: const InputDecoration(
@@ -138,4 +162,46 @@ class _RecipeFormPageState extends State<RecipeFormPage> {
       ),
     );
   }
+
+  Future<void> _pickImage(ImageSource source) async {
+  final path = await _imageService.pickAndSave(source);
+  if (path != null) setState(() => _imagePath = path);
+}
+
+void _showImageOptions() {
+  showModalBottomSheet(
+    context: context,
+    builder: (_) => SafeArea(
+      child: Wrap(
+        children: [
+          ListTile(
+            leading: const Icon(Icons.photo_library),
+            title: const Text('Choose from gallery'),
+            onTap: () {
+              Navigator.pop(context);
+              _pickImage(ImageSource.gallery);
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.photo_camera),
+            title: const Text('Take a photo'),
+            onTap: () {
+              Navigator.pop(context);
+              _pickImage(ImageSource.camera);
+            },
+          ),
+          if (_imagePath != null)
+            ListTile(
+              leading: const Icon(Icons.delete_outline),
+              title: const Text('Remove photo'),
+              onTap: () {
+                Navigator.pop(context);
+                setState(() => _imagePath = null);
+              },
+            ),
+        ],
+      ),
+    ),
+  );
+}
 }
