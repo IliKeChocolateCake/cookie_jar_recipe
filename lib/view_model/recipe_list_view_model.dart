@@ -17,12 +17,22 @@ class RecipeListViewModel extends ChangeNotifier {
 
   bool get isJarEmpty => _recipeRepository.getAll().isEmpty;
 
-  Future<void> load() async {
-    types = await _recipeTypeApi.load();
-    _refresh();
-    isLoading = false;
-    notifyListeners();
-  }
+ DateTime? lastSynced;
+
+Future<void> load() async {
+  types = await _recipeTypeApi.load();
+  _refresh();
+  lastSynced = DateTime.now();
+  isLoading = false;
+  notifyListeners();
+}
+
+String get lastSyncedLabel {
+  final t = lastSynced;
+  if (t == null) return 'Not synced yet';
+  String two(int n) => n.toString().padLeft(2, '0');
+  return 'Last synced ${two(t.day)}/${two(t.month)}/${t.year} ${two(t.hour)}:${two(t.minute)}';
+}
 
   void setFilter(int? typeId) {
     selectedTypeId = typeId;

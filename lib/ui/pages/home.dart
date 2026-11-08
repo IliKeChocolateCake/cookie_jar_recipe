@@ -17,10 +17,12 @@ class MyHomePage extends StatelessWidget {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(title),
         actions: [
-          IconButton(
+          TextButton.icon(
+
+            label: Text('Last synced: ${vm.lastSyncedLabel}', style: const TextStyle(color: Colors.white)),
             icon: const Icon(Icons.refresh),
             onPressed: vm.load,
-            tooltip: 'Refresh',
+
           ),
         ],
       ),
