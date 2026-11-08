@@ -6,7 +6,7 @@ import 'dart:convert';
 
 class RecipeTypeApi  {
    Future<List<RecipeType>> load() async {
-    final raw = await rootBundle.loadString('assets/data/recipetypes.json');
+    final raw = await rootBundle.loadString('asset/recipetypes.json');
     final data = jsonDecode(raw) as Map<String, dynamic>;
     return (data['recipeTypes'] as List)
         .map((e) => RecipeType.fromJson(e))
