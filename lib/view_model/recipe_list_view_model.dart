@@ -42,11 +42,13 @@ String get lastSyncedLabel {
     notifyListeners();
   }
 
-  Future<void> delete(String id) async {
-    await _recipeRepository.delete(id);
-    _refresh();
-    notifyListeners();
-  }
+Future<void> delete(String id) async {
+  recipes.removeWhere((r) => r.id == id); // gone from the list right away
+  notifyListeners();
+  await _recipeRepository.delete(id);
+  _refresh();                              // re-sync with the box
+  notifyListeners();
+}
 
   void reload() {
     _refresh();

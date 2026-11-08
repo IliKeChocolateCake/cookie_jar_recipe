@@ -6,6 +6,7 @@ import 'package:cookie_jar_recipe/ui/widget/recipe_card.dart';
 import 'package:cookie_jar_recipe/ui/pages/recipe_form_page.dart';
 import 'package:cookie_jar_recipe/ui/pages/recipe_detail_page.dart';
 import 'package:cookie_jar_recipe/constant/text_style.dart';
+import 'package:cookie_jar_recipe/ui/widget/confirm_delete.dart';
 
 class MyHomePage extends StatelessWidget {
   final String title;
@@ -119,19 +120,38 @@ class _RecipeList extends StatelessWidget {
     return ListView.builder(
       padding: const EdgeInsets.only(bottom: 88), // keeps the FAB off the last card
       itemCount: vm.recipes.length,
-      itemBuilder: (context, index) {
-        final recipe = vm.recipes[index];
-        return RecipeCard(
-          recipe: recipe,
-          typeName: vm.typeName(recipe.typeId),
-          onTap: () {
-            Navigator.push(
-  context,
-  MaterialPageRoute(builder: (_) => RecipeDetailPage(recipeId: recipe.id)),
-);
-          },
-        );
-      },
+     itemBuilder: (context, index) {
+  final recipe = vm.recipes[index];
+  return Dismissible(
+    key: ValueKey(recipe.id), // the id, never the index
+    direction: DismissDirection.startToEnd, // swipe right
+    background: Container(
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      padding: const EdgeInsets.only(left: 24),
+      alignment: Alignment.centerLeft,
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.error,
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Icon(
+        Icons.delete,
+        color: Theme.of(context).colorScheme.onError,
+      ),
+    ),
+    confirmDismiss: (_) => confirmDelete(context, recipe.title),
+    onDismissed: (_) => context.read<RecipeListViewModel>().delete(recipe.id),
+    child: RecipeCard(
+      recipe: recipe,
+      typeName: vm.typeName(recipe.typeId),
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => RecipeDetailPage(recipeId: recipe.id),
+        ),
+      ),
+    ),
+  );
+},
     );
   }
 }
