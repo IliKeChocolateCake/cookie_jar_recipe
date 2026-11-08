@@ -19,9 +19,9 @@ class MyHomePage extends StatelessWidget {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(title),
         actions: [
-          TextButton.icon(
+          IconButton(
 
-            label: Text(vm.lastSyncedLabel, style: const TextStyle(color: Colors.white)),
+
             icon: const Icon(Icons.refresh),
             onPressed: vm.load,
 
@@ -32,6 +32,13 @@ class MyHomePage extends StatelessWidget {
           ? const Center(child: CircularProgressIndicator())
           : Column(
               children: [
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Text(
+                    '${vm.lastSynced ?? 'never'}',
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                ),
                 _FilterChips(vm: vm),
                 Expanded(child: _RecipeList(vm: vm)),
               ],
