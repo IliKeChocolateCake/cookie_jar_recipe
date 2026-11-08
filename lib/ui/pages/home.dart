@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:cookie_jar_recipe/view_model/recipe_list_view_model.dart';
 import 'package:cookie_jar_recipe/ui/widget/empty_state.dart';
 import 'package:cookie_jar_recipe/ui/widget/recipe_card.dart';
+import 'package:cookie_jar_recipe/ui/pages/recipe_form_page.dart';
 
 class MyHomePage extends StatelessWidget {
   final String title;
@@ -19,7 +20,7 @@ class MyHomePage extends StatelessWidget {
         actions: [
           TextButton.icon(
 
-            label: Text('Last synced: ${vm.lastSyncedLabel}', style: const TextStyle(color: Colors.white)),
+            label: Text(vm.lastSyncedLabel, style: const TextStyle(color: Colors.white)),
             icon: const Icon(Icons.refresh),
             onPressed: vm.load,
 
@@ -36,7 +37,10 @@ class MyHomePage extends StatelessWidget {
             ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // TODO: open the recipe form page
+          Navigator.push(
+  context,
+  MaterialPageRoute(builder: (_) => const RecipeFormPage()),
+);
         },
         tooltip: 'Add recipe',
         child: const Icon(Icons.add),

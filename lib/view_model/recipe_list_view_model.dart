@@ -57,6 +57,12 @@ String get lastSyncedLabel {
         : _recipeRepository.filterByType(selectedTypeId!);
   }
 
+Future<void> save(RecipeModel recipe) async {
+  await _recipeRepository.save(recipe);
+  _refresh();
+  notifyListeners();
+}
+
   String typeName(int typeId) {
     for (final t in types) {
       if (t.id == typeId) return t.name;
